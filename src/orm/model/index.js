@@ -3,7 +3,7 @@ module.exports = function (seq) {
   const message = require('./message')(seq)
   const friend = require('./friend')(seq)
   const user = require('./user')(seq)
-  const read = require('./read')(seq)
+  const unread = require('./unread')(seq)
 
   // Many to Many defination
   user.belongsToMany(user, {
@@ -17,12 +17,21 @@ module.exports = function (seq) {
   user.hasMany(message, {
     foreignKey: 'sender'
   })
-  user.hasMany(read, {
+  message.belongsTo(user, {
+    foreignKey: 'sender'
+  })
+  user.hasMany(unread, {
     foreignKey: 'receiver'
   })
-  message.hasMany(read, {
+  unread.belongsTo(user, {
+    foreignKey: 'receiver'
+  })
+  message.hasMany(unread, {
+    foreignKey: 'msg_id'
+  })
+  unread.belongsTo(message, {
     foreignKey: 'msg_id'
   })
 
-  return { channel, message, read, friend, user }
+  return { channel, message, unread, friend, user }
 }

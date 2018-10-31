@@ -33,18 +33,6 @@ module.exports = async (soc, msg) => {
     msgId: message.id
   })
 
-  soc.to(msg.channel).emit('sb-saying', {
-    msgId: message.id,
-    channel: msg.channel,
-    content: msg.content,
-    time: create_at,
-    sender: {
-      id: user.id,
-      name: user.name,
-      avatar: user.avatar
-    }
-  })
-
   const bundleToRead = []
   room.joiners.forEach(i => {
     bundleToRead.push({
@@ -53,5 +41,28 @@ module.exports = async (soc, msg) => {
       msg_id: message.id
     })
   })
-  await soc.orm.read.bulkCreate(bundleToRead)
+  await soc.orm.unread.bulkCreate(bundleToRead)
+  const reads = await soc.orm.unread.findAll({
+    where: {
+      msg_id: message.id,
+      is_read: false
+    }
+  })
+  const uuids = reads.map(i => ({
+    uuid: i.id,
+    user: i.receiver
+  }))
+
+  soc.to(msg.channel).emit('sb-saying', {
+    msgId: message.id,
+    channel: msg.channel,
+    content: msg.content,
+    time: create_at,
+    uuids,
+    sender: {
+      id: user.id,
+      name: user.name,
+      avatar: user.avatar
+    }
+  })
 }

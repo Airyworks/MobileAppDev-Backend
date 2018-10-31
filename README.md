@@ -82,7 +82,6 @@ Listen port `3001`
   }
   ```
   this response means server authorized user  
-  invalid `token` will cause connection disconnects
 #### New chat
 * __Client__
   ```json
@@ -125,7 +124,6 @@ Listen port `3001`
   {
     "action": "pull-message",
     "msg": {
-      "sequence": number,
       "messages": [
         IMessageType
       ]
@@ -136,8 +134,13 @@ Listen port `3001`
   ```json
   {
     "uuid": string,
-    "from": number,   // user id
-    "toChannel": string,
+    "sender": {
+      "id": number,
+      "name": string,
+      "avatar": string
+    },   // user
+    "msgId": number,
+    "channel": string,
     "content": string,
     "time": timestamp
   }
@@ -147,7 +150,7 @@ Listen port `3001`
   {
     "action": "client-received",
     "msg": {
-      "sequence": number
+      "uuids": [number]
     }
   }
   ```
@@ -185,6 +188,12 @@ Listen port `3001`
       "channel": string,
       "content": string,
       "time": timestamp,
+      "uuids": [
+        {
+          "uuid": number,
+          "user": number
+        }
+      ],
       "sender": {
         "id": number,
         "name": string,
@@ -193,3 +202,7 @@ Listen port `3001`
     }
   }
   ```
+#### Any Error Definations
+* `forbidden`: No access to current channel
+* `invalid-param`: Param invalid
+* `token-missing`: Token given missing or incorrect

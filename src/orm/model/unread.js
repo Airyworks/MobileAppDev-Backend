@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 
 module.exports = function (seq) {
-  return seq.define('read', {
+  return seq.define('unread', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -13,7 +13,7 @@ module.exports = function (seq) {
     },
     is_read: {
       type: Sequelize.BOOLEAN,
-      defaultValue: false,
+      defaultValue: 0,
       allowNull: false
     },
     msg_id: {

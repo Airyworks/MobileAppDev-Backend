@@ -24,7 +24,7 @@ module.exports = {
     return rooms.find(i => compare(i.joiners, joiners))
   },
   addRoom: (joiners) => {
-    const id = `room.${rooms.length}`
+    const id = `channel.${rooms.length}`
     rooms.push({
       id,
       joiners
