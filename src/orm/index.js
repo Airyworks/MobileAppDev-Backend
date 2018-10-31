@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const config = require('../../config.json').database
+const defination = require('./model')
 
 const sequelize = new Sequelize(
   config.database,
@@ -19,4 +20,9 @@ const sequelize = new Sequelize(
   }
 )
 
-module.exports = sequelize
+const model = defination(sequelize)
+
+module.exports = {
+  model,
+  sequelize
+}

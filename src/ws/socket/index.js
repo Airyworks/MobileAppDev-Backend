@@ -8,6 +8,9 @@ module.exports = async (soc, data) => {
   if (!parsed.action ||!parsed.msg) {
     throw new Error(`Json parse failed: ${data}`)
   }
+
+  soc.user = null
+
   const { action, msg } = parsed
   switch (action) {
     case 'hello':
