@@ -1,13 +1,13 @@
 const Server = require('socket.io')
+const config = require('../../config.json').wsServ
 const socket = require('./socket')
-const sequelize = require('../orm')
+const { model } = require('../orm')
 
-const { log, warn, error } = console
-const io = new Server(3001)
+const io = new Server(config.port, {
+  transports: 'websocket'
+})
 
 io.on('connection', soc => {
-  soc.orm = sequelize
-  soc.on('msg', data => {
-    socket(soc, data).catch(err => error(err))
-  })
+  soc.orm = model
+  socket(soc)
 })

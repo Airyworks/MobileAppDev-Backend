@@ -4,10 +4,12 @@
     "password": "password",
     "database": "wachet",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timezone": "+08:00"
   },
   "httpServ": {
-    "port": 3000
+    "port": 3000,
+    "cookieKeys": ["Any String You Like", "I'd like a cup of coffee"]
   },
   "wsServ": {
     "port": 3001

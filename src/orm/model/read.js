@@ -1,26 +1,23 @@
 const Sequelize = require('sequelize')
 
 module.exports = function (seq) {
-  return seq.define('message', {
+  return seq.define('read', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    content: {
-      type: Sequelize.TEXT,
-      allowNull: false
-    },
-    sender: {
+    receiver: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
-    channel: {
-      type: Sequelize.STRING,
+    is_read: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
       allowNull: false
     },
-    create_at: {
-      type: Sequelize.DATE,
+    msg_id: {
+      type: Sequelize.INTEGER,
       allowNull: false
     }
   }, {

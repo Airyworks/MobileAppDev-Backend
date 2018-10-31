@@ -8,10 +8,15 @@ module.exports = function (seq) {
       autoIncrement: true
     },
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    pwd: {
+      type: Sequelize.STRING,
+      allowNull: false
     },
     token: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true
     },
     expire_at: {
@@ -24,8 +29,8 @@ module.exports = function (seq) {
     }
   }, {
     'timestamps': false,
-    "createdAt":false,
-    "updatedAt":false,
-    "deletedAt":false,
+    'createdAt':false,
+    'updatedAt':false,
+    'deletedAt':false,
   })
 }

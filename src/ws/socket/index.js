@@ -1,27 +1,20 @@
 const hello = require('./hello')
 const newChat = require('./newChat')
-const pullMsg = require('./pullMsg')
+const clientRcv = require('./clientRcv')
 const pushMsg = require('./pushMsg')
+const newRoomBuilt = require('./newRoomBuilt')
+const sbSaying = require('./sbSaying')
 
-module.exports = async (soc, data) => {
-  const parsed = JSON.parse(data)
-  if (!parsed.action ||!parsed.msg) {
-    throw new Error(`Json parse failed: ${data}`)
-  }
+const { error } = console
+const wrap = soc => func => {
+  return data => { func(soc, data).catch(err => error) }
+}
 
-  soc.user = null
-
-  const { action, msg } = parsed
-  switch (action) {
-    case 'hello':
-      return await hello(soc, msg)
-    case 'new-chat':
-      return await newChat(soc, msg)
-    case 'pull-message':
-      return await pullMsg(soc, msg)
-    case 'push-message':
-      return await pushMsg(soc, msg)
-    default:
-      throw new Error(`Undefined action: ${action}`)
-  }
+module.exports = (soc) => {
+  soc.on('hello', wrap(soc)(hello))
+  soc.on('new-chat', wrap(soc)(newChat))
+  soc.on('client-received', wrap(soc)(clientRcv))
+  soc.on('push-message', wrap(soc)(pushMsg))
+  soc.on('new-room-built', wrap(soc)(newRoomBuilt))
+  soc.on('sb-saying', wrap(soc)(sbSaying))
 }

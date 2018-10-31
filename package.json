@@ -11,9 +11,11 @@
   "license": "LGPL-3.0+",
   "dependencies": {
     "koa": "^2.6.1",
+    "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "koa-session": "^5.10.0",
     "mysql2": "^1.6.1",
+    "randomstring": "^1.1.5",
     "sequelize": "^4.41.0",
     "socket.io": "^2.1.1"
   },

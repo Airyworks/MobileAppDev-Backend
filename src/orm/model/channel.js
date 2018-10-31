@@ -12,8 +12,8 @@ module.exports = function (seq) {
     }
   }, {
     'timestamps': false,
-    "createdAt":false,
-    "updatedAt":false,
-    "deletedAt":false,
+    'createdAt':false,
+    'updatedAt':false,
+    'deletedAt':false,
   })
 }

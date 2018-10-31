@@ -98,7 +98,8 @@ Listen port `3001`
   }
   ```
   `id` is a user id
-* __Server__
+* __Server__  
+  __to Client__:
   ```json
   {
     "action": "new-chat-res",
@@ -108,6 +109,16 @@ Listen port `3001`
   }
   ```
   returns created channel
+  __to Other Joiners On Server__:
+  ```json
+  {
+    "event": "new-room-built",
+    "msg": {
+      "joiners": [number],
+      "channel"
+    }
+  }
+  ```  
 #### Receive Message(Client Side) / Pull Message(Server Side)
 * __Server__
   ```json
@@ -148,7 +159,7 @@ Listen port `3001`
     "action": "push-message",
     "msg": {
       "sequence": number,
-      "toChannel": string,
+      "channel": string,
       "content": string
     }
   }
@@ -158,10 +169,27 @@ Listen port `3001`
   {
     "action": "server-received",
     "msg": {
-      "uuid": string,
       "sequence": number,
-      "time": timestamp
+      "time": timestamp,
+      "msgId": number
     }
   }
   ```
-  where `sequence` is to distinguish wich message has been received
+  where `sequence` is to distinguish wich message has been received  
+  __to Other Joiners In One Room__:
+  ```json
+  {
+    "event": "sb-saying",
+    "msg": {
+      "msgId": number,
+      "channel": string,
+      "content": string,
+      "time": timestamp,
+      "sender": {
+        "id": number,
+        "name": string,
+        "avatar": string
+      }
+    }
+  }
+  ```
