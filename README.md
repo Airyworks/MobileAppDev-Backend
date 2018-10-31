@@ -7,9 +7,10 @@ Backend for mobile app dev project(wachet)
 --------------------
 
 ### HTTP Api
+Listen port `3000`
 #### Login
 * __Request__   
-  __Url__: `/account/login`  
+  __Url__: `/login`  
   __Method__: `POST`  
   __Body__:
   ```json
@@ -33,7 +34,7 @@ Backend for mobile app dev project(wachet)
   note: `token` used to build websocket connection
 #### Logout
 * __Request__  
-  __Url__: `/account/logout`  
+  __Url__: `/logout`  
   __Method__: `POST`  
   __Body__: _no body_
 * __Response__  
@@ -41,7 +42,7 @@ Backend for mobile app dev project(wachet)
   __Body__: _no body_
 #### Friends
 * __Request__  
-  __Url__: `/account/friends`  
+  __Url__: `/friends`  
   __Method__: `GET`  
   __Body__: _no body_  
 * __Response__  
@@ -59,7 +60,8 @@ Backend for mobile app dev project(wachet)
 
 ----------------
 ### Websocket API
-After login, client creates a websocket connection with server 
+After login, client creates a websocket connection with server  
+Listen port `3001`
 #### Hello
 * __Client__  
   ```json
@@ -106,11 +108,11 @@ After login, client creates a websocket connection with server
   }
   ```
   returns created channel
-#### Receive Message
+#### Receive Message(Client Side) / Pull Message(Server Side)
 * __Server__
   ```json
   {
-    "action": "new-message",
+    "action": "pull-message",
     "msg": {
       "sequence": number,
       "messages": [
@@ -139,11 +141,11 @@ After login, client creates a websocket connection with server
   }
   ```
   `sequence` is to distinguish which message client received
-#### Send Message
+#### Send Message(Client Side) / Push Message(Server Side)
 * __Client__
   ```json
   {
-    "action": "send-message",
+    "action": "push-message",
     "msg": {
       "sequence": number,
       "toChannel": string,

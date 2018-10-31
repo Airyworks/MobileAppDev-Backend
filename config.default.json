@@ -1,0 +1,15 @@
+{
+  "database": {
+    "username": "root",
+    "password": "password",
+    "database": "wachet",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "httpServ": {
+    "port": 3000
+  },
+  "wsServ": {
+    "port": 3001
+  }
+}
