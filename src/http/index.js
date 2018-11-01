@@ -3,7 +3,7 @@ const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 const config = require('../../config.json').httpServ
 const router = require('./router')
-const { model } = require('../orm')
+const { model, sequelize } = require('../orm')
 
 const app = new Koa()
 
@@ -12,6 +12,7 @@ app.use(bodyParser())
 app.use(session(app))
 app.use(async (ctx, next) => {
   ctx.orm = model
+  ctx.sequelize = sequelize
   await next()
 })
 app.use(router.routes())

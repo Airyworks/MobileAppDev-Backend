@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const { login, logout, friends } = require('./controller')
+const { login, logout, friends, channels } = require('./controller')
 
 const router = new Router()
 
@@ -13,6 +13,10 @@ router.post('/logout', async(ctx, next) => {
 
 router.get('/friends', async(ctx, next) => {
   await friends(ctx, next)
+})
+
+router.get('/channels', async(ctx, next) => {
+  await channels(ctx, next)
 })
 
 module.exports = router
