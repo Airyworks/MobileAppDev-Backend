@@ -57,6 +57,28 @@ Listen port `3000`
     }
   ]
   ```
+#### Channels
+* __Request__  
+  __Url__: `/channels`  
+  __Method__: `GET`  
+  __Body__: _no body_  
+* __Response__  
+  __HTTP code__: `200 OK | 403 Forbidden`  
+  __Body__:
+  ```json
+  [
+    {
+      "name": string,
+      "users": [
+        {
+          "id": number,
+          "name": string,
+          "avatar": string
+        }
+      ]
+    }
+  ]
+  ```
 
 ----------------
 ### Websocket API
