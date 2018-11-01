@@ -1,4 +1,4 @@
-let rooms = {}
+let rooms = []
 // [{id: 'roomId', joiners: [user1Id, user2Id]}, ...]
 
 function compare(inRoom, joiners) {

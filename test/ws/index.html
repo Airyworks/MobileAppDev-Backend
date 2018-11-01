@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Websocket Serve Test</title>
+</head>
+<script src="./ws.test.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+<body>
+  <div class="wrap" style="margin-bottom: 20px">
+  token: <input id="token-input" type="text"/>
+  <button onclick="login()">login</button>
+  </div>
+  <div class="fixed wrap">
+    event: <input id="event-input" type="text"/><br>
+    data: <input style="width: 100%" id="data-input" type="text"/>
+    <button onclick="emit()">emit</button>
+  </div>
+  <div class="wrap" id="history"></div>
+</body>
+<style>
+.wrap {
+  width: 600px;
+  margin: auto;
+}
+.fixed {
+  position: fixed;
+  bottom: 0;
+  width: 600px;
+  margin: auto;
+}
+</style>
+</html>

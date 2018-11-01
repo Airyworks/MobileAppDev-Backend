@@ -78,7 +78,11 @@ Listen port `3001`
   ```json
   {
     "action": "hi",
-    "msg": {}
+    "msg": {
+      "id": number,
+      "name": string,
+      "avatar": string
+    }
   }
   ```
   this response means server authorized user  
@@ -108,16 +112,6 @@ Listen port `3001`
   }
   ```
   returns created channel
-  __to Other Joiners On Server__:
-  ```json
-  {
-    "event": "new-room-built",
-    "msg": {
-      "joiners": [number],
-      "channel"
-    }
-  }
-  ```  
 #### Receive Message(Client Side) / Pull Message(Server Side)
 * __Server__
   ```json
@@ -133,7 +127,12 @@ Listen port `3001`
   `IMessageType` is defined as:
   ```json
   {
-    "uuid": string,
+    "uuids": [
+      {
+        "user": number,
+        "uuid": number
+      }
+    ],
     "sender": {
       "id": number,
       "name": string,
@@ -179,29 +178,6 @@ Listen port `3001`
   }
   ```
   where `sequence` is to distinguish wich message has been received  
-  __to Other Joiners In One Room__:
-  ```json
-  {
-    "event": "sb-saying",
-    "msg": {
-      "msgId": number,
-      "channel": string,
-      "content": string,
-      "time": timestamp,
-      "uuids": [
-        {
-          "uuid": number,
-          "user": number
-        }
-      ],
-      "sender": {
-        "id": number,
-        "name": string,
-        "avatar": string
-      }
-    }
-  }
-  ```
 #### Any Error Definations
 * `forbidden`: No access to current channel
 * `invalid-param`: Param invalid

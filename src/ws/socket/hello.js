@@ -10,7 +10,7 @@ module.exports = async (soc, msg) => {
     where: {
       token: msg.token,
       expire_at: {
-        [Op.lte]: new Date()
+        [Op.gte]: new Date()
       }
     }
   })
@@ -19,11 +19,16 @@ module.exports = async (soc, msg) => {
     throw new Error(`Error or expired token`)
   }
   soc.user = user
+  soc.join(`user.${user.id}`)
 
-  soc.emit('hi', {})
+  soc.emit('hi', {
+    id: user.id,
+    name: user.name,
+    avatar: user.avatar
+  })
 
   // auto join rooms
-  const channels = await ctx.orm.channel.findAll({
+  const channels = await soc.orm.channel.findAll({
     where: {
       user: user.id
     }
@@ -33,18 +38,19 @@ module.exports = async (soc, msg) => {
   })
 
   // check whether there are new msgs?
-  const unread = await ctx.orm.unread.findAll({
+  const unread = await soc.orm.unread.findAll({
     where: {
       is_read: 0,
-      receiver: 3
+      receiver: user.id
     },
     include: {
-      model: ctx.orm.message,
+      model: soc.orm.message,
       include: {
-        model: ctx.orm.user
+        model: soc.orm.user
       }
     }
   })
+
   const unreadMsg = unread.map(i => {
     const sender = {
       id: i.message.user.id,
@@ -56,9 +62,15 @@ module.exports = async (soc, msg) => {
       msgId: i.message.id,
       channel: i.message.channel,
       time: i.message.create_at,
-      uuid: i.id,
+      uuids: [ {
+        uuid: i.id,
+        user:user.id
+      } ],
       sender
     }
   })
-  soc.emit('pull-message', { messages: unreadMsg }) 
+
+  if (unreadMsg.length > 0) {
+    soc.emit('pull-message', { messages: unreadMsg }) 
+  }
 }

@@ -36,7 +36,7 @@ module.exports = async (soc, msg) => {
   const bundleToRead = []
   room.joiners.forEach(i => {
     bundleToRead.push({
-      receiver: id,
+      receiver: i,
       is_read: i === user.id,
       msg_id: message.id
     })
@@ -53,16 +53,18 @@ module.exports = async (soc, msg) => {
     user: i.receiver
   }))
 
-  soc.to(msg.channel).emit('sb-saying', {
-    msgId: message.id,
-    channel: msg.channel,
-    content: msg.content,
-    time: create_at,
-    uuids,
-    sender: {
-      id: user.id,
-      name: user.name,
-      avatar: user.avatar
-    }
+  soc.to(msg.channel).emit('pull-message', {
+    messages:[ {
+      msgId: message.id,
+      channel: msg.channel,
+      content: msg.content,
+      time: create_at,
+      uuids,
+      sender: {
+        id: user.id,
+        name: user.name,
+        avatar: user.avatar
+      }
+    } ]
   })
 }

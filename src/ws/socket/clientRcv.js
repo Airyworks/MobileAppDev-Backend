@@ -1,3 +1,6 @@
+const Op = require('sequelize').Op
+const { getUser } = require('./helper')
+
 module.exports = async (soc, msg) => {
   if (!getUser(soc)) {
     soc.emit('forbidden', {})
@@ -10,10 +13,12 @@ module.exports = async (soc, msg) => {
   }
 
   const user = getUser(soc)
-  await soc.orm.unread.update({ is_read: true }, {
+  await soc.orm.unread.update({ is_read: 1 }, {
     where: {
-      'id': uuids,
+      'id': {
+        [Op.in]: msg.uuids
+      },
       'receiver': user.id
     }
-  })  
+  })
 }

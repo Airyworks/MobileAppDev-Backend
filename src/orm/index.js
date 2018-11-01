@@ -10,6 +10,7 @@ const sequelize = new Sequelize(
     host: config.host,
     dialect: config.dialect,
     operatorsAliases: false,
+    logging: false,
 
     pool: {
       max: 5,

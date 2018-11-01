@@ -13,8 +13,8 @@ module.exports = async (soc, msg) => {
   }
 
   const user = getUser(soc)
-  const others = to.map(i => i.id)
-  const joiners = others.push(user.id)
+  const others = msg.to.map(i => i.id)
+  const joiners = others.concat([user.id])
   const room = getRoomByJoiners(joiners)
   if (!room) {
     const channel = addRoom(joiners)
@@ -26,14 +26,13 @@ module.exports = async (soc, msg) => {
 
     soc.join(channel)
     soc.emit('new-chat-res', { channel })
-    // broadcast 
-    soc.broadcast.emit('new-room-built', {
-      joiners: others,
-      channel
+    
+    others.forEach(i => {
+      soc.to(`user.${i}`).join(channel)
     })
   } else {
     const channel = room
     soc.join(channel)
-    soc.emit('new-chat-res', { channel })
+    soc.emit('new-chat-res', { channel: channel.id })
   }
 }

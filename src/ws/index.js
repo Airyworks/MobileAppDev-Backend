@@ -4,7 +4,7 @@ const socket = require('./socket')
 const { model } = require('../orm')
 
 const io = new Server(config.port, {
-  transports: 'websocket'
+  transports: ['websocket']
 })
 
 io.on('connection', soc => {
