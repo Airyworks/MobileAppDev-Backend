@@ -29,7 +29,8 @@ module.exports = async (ctx, next) => {
 
     ctx.response.body = {
       id: user.id,
-      token
+      token,
+      expireTime
     }
     await next()
   }

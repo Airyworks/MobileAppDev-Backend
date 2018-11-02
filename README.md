@@ -14,7 +14,7 @@ Listen port `3000`
   __Method__: `POST`  
   __Body__:
   ```json
-  ### form-data formated ###
+  ### x-www-form-urlencoded formated ###
   {
     "name": string,
     "pwd": string
@@ -27,7 +27,8 @@ Listen port `3000`
   ```json
   {
     "id": number,
-    "token": string
+    "token": string,
+    "expireTime": timestamp
   }
   ```
   browser will be set cookie here  
