@@ -15,6 +15,11 @@ module.exports = async (ctx, next) => {
       group: 'name'
     })
     const channelNames = channels.map(i => `'${i.name}'`)
+    if (!Array.isArray(channelNames) || channelNames.length === 0) {
+      ctx.response.body = []
+      await next()
+      return
+    }
 
     // notice SQL rejection
     const peopleQuery = await ctx.sequelize.query(
